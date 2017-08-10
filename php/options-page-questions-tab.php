@@ -494,8 +494,6 @@ function qsm_options_questions_tab_content() {
 	// Load Categories
 	$qmn_quiz_categories = $wpdb->get_results( $wpdb->prepare( "SELECT category FROM {$wpdb->prefix}mlw_questions WHERE quiz_id=%d AND deleted='0'
 		GROUP BY category", $quiz_id ) );
-
-	$is_new_quiz = $wpdb->num_rows;
 	?>
 		<button class="add-new-h2" id="new_question_button"><?php _e('Add Question', 'quiz-master-next'); ?></button>
 		<button class="add-new-h2" id="from_other_quiz_button"><?php _e('Add Question From Other Survey/Quiz', 'quiz-master-next'); ?></button>
