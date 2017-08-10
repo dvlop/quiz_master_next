@@ -4,23 +4,33 @@
 
 var QSMQuestion;
 (function ($) {
-  QSMQuestion = {
-    addQuestionFromQuiz: function() {
-      jQuery( "#from_other_quiz_dialog" ).dialog({
-        autoOpen: false,
-        width: 550,
-        height: 400,
-        buttons: {
-          Cancel: function() {
-            jQuery( this ).dialog( 'close' );
-          }
-        }
-      });
-      QSMQuestion.loadSpinner( '.other_quiz_questions', true );
-      jQuery( "#from_other_quiz_dialog" ).dialog( 'open' );
-      QSMQuestion.loadQuestionBank();
+	QSMQuestion = {
+		createNewPage: function() {
+			var template = _.template( jQuery( '#page-tmpl' ).html() );
+			$( 'questions' ).append( template() );
+			setTimeout( QSMQuestion.removeNew, 250 );
+		},
+		createNewQuestion: function( page ) {
+			var template = _.template( jQuery( '#question-tmpl' ).html() );
+			page.append( template( { type : 'Large Open Answer', category : 'Math', question: 'Some random question' } ) );
+			setTimeout( QSMQuestion.removeNew, 250 );
+		},
+		addQuestionFromQuiz: function() {
+			jQuery( "#from_other_quiz_dialog" ).dialog({
+				autoOpen: false,
+				width: 550,
+				height: 400,
+				buttons: {
+					Cancel: function() {
+						jQuery( this ).dialog( 'close' );
+					}
+				}
+			});
+			QSMQuestion.loadSpinner( '.other_quiz_questions', true );
+			jQuery( "#from_other_quiz_dialog" ).dialog( 'open' );
+			QSMQuestion.loadQuestionBank();
     },
-    loadQuestionBank: function() {
+		loadQuestionBank: function() {
       var data = {
       	action: 'qsm_load_all_quiz_questions'
       };
@@ -62,8 +72,24 @@ var QSMQuestion;
     },
     removeSpinner: function( container ) {
       $( container + ' .qsm-spinner-loader' ).remove();
-    }
-  };
+    },
+		removeNew: function() {
+			$( '.page-new' ).removeClass( 'page-new' );
+			$( '.question-new' ).removeClass( 'question-new' );
+		}
+	}
+
+	$(function() {
+		$( '.new-page-button' ).on( 'click', function( event ) {
+			event.preventDefault();
+			QSMQuestion.createNewPage();
+		});
+
+		$( '.questions' ).on( 'click', '.new-question-button', function( event ) {
+			event.preventDefault();
+			QSMQuestion.createNewQuestion( $( this ).parent() );
+		});
+	});
 
   // Code to run after DOM is loaded
   $(function() {
@@ -119,36 +145,7 @@ function add_answer(answer, points, correct)
   jQuery("#answers").append($answer_single);
 }
 
-function deleteQuestion( id ) {
-  jQuery("#delete_dialog").dialog({
-    autoOpen: false,
-    show: 'blind',
-    hide: 'explode',
-    buttons: {
-    Cancel: function() {
-      jQuery(this).dialog('close');
-      }
-    }
-  });
-  jQuery("#delete_dialog").dialog('open');
-  var idHidden = document.getElementById("delete_question_id");
-  idHidden.value = id;
-}
-function duplicateQuestion( id ) {
-  jQuery("#duplicate_dialog").dialog({
-    autoOpen: false,
-    show: 'blind',
-    hide: 'explode',
-    buttons: {
-    Cancel: function() {
-      jQuery(this).dialog('close');
-      }
-    }
-  });
-  jQuery("#duplicate_dialog").dialog('open');
-  var idHidden = document.getElementById("duplicate_question_id");
-  idHidden.value = id;
-}
+
 
 jQuery("#new_answer_button").click(function(event) {
   event.preventDefault();
