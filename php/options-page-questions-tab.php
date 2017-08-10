@@ -149,22 +149,16 @@ function qsm_options_questions_tab_content() {
 			</div>
 		</div>
 	</script>
-	<div id="from_other_quiz_dialog" title="Add Question From Other Quiz" style="display:none;">
-			<h3><?php _e('Select a question to import into this quiz', 'quiz-master-next'); ?></h3>
-			<p>
-				<label class="screen-reader-text" for="question_search">Search Questions:</label>
-				<input type="search" id="dialog_question_search" name="dialog_question_search" value="">
-				<button class="button" id="dialog_question_search_button">Search Questions</button>
-			</p>
-			<div class="other_quiz_questions">
 
-			</div>
-			<form action='' method='post' id="copy_question_form">
-				<?php wp_nonce_field('add_question_from_quiz','add_question_from_quiz_nonce'); ?>
-				<input type='hidden' id='copy_question_id' name='copy_question_id' value='' />
-				<input type='hidden' name='quiz_id' value='<?php echo $quiz_id; ?>' />
-			</form>
+	<!-- View for single answer -->
+	<script type="text/template" id="single-answer-tmpl">
+		<div class="answers_single">
+			<div class="answer_number"><button class="button delete_answer">Delete</button> '+answer_text+'</div>'+
+			<div class="answer_text"><input type="text" class="answer_input" name="answer_'+total_answers+'" id="answer_'+total_answers+'" value="'+answer+'" /></div>'+
+			<div class="answer_points"><input type="text" class="answer_input" name="answer_'+total_answers+'_points" id="answer_'+total_answers+'_points" value="'+points+'" /></div>'+
+			<div class="answer_correct"><input type="checkbox" id="answer_'+total_answers+'_correct" name="answer_'+total_answers+'_correct"'+correct_text+' value=1 /></div>'+
 		</div>
+	</script>
 	<?php
 }
 
