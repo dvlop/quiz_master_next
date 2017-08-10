@@ -117,10 +117,6 @@ function qsm_options_questions_tab_content() {
 					<input type="radio" class="comments_radio" id="commentsRadio2" name="comments" checked="checked" value="1" /><label for="commentsRadio2"><?php _e('None', 'quiz-master-next'); ?></label><br>
 				</div>
 			</div>
-			<div class="row">
-				<label class="option_label"><?php _e('Question Order', 'quiz-master-next'); ?></label>
-				<input class="option_input" type="number" step="1" min="1" name="new_question_order" value="<?php echo count($questions)+1; ?>" id="new_question_order"/>
-			</div>
 			<div id="required_area" class="row">
 				<label class="option_label"><?php _e('Required?', 'quiz-master-next'); ?></label>
 				<select class="option_input" name="required" id="required">
@@ -131,19 +127,6 @@ function qsm_options_questions_tab_content() {
 			<div id="category_area" class="row">
 				<label class="option_label"><?php _e('Category', 'quiz-master-next'); ?></label>
 				<div class="option_input">
-					<?php
-					foreach($qmn_quiz_categories as $category)
-					{
-						if ($category->category != '')
-						{
-							?>
-							<input type="radio" class="category_radio" name="new_category" id="new_category<?php echo esc_attr($category->category); ?>" value="<?php echo esc_attr($category->category); ?>">
-							<label for="new_category<?php echo esc_attr($category->category); ?>"><?php echo $category->category; ?></label>
-							<br />
-							<?php
-						}
-					}
-					?>
 					<input type="radio" name="new_category" id="new_category_new" value="new_category"><label for="new_category_new">New: <input type='text' name='new_new_category' value='' /></label>
 				</div>
 			</div>
